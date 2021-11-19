@@ -6,15 +6,18 @@
 #include <string.h>
 
 int main() {
-char line[50];
+  setup();
+  
+  char line[50];
 
-printf("Enter commands: \n");
-fgets(line, sizeof(line), stdin);
-int newline = strcspn(line, "\n");
-line[newline] = '\0';
+  printf("Enter commands: \n");
+  fgets(line, sizeof(line), stdin);
+  int newline = strcspn(line, "\n");
+  line[newline] = '\0';
 
-printf("\n");
+  printf("\n");
   char** args = parse_args(line);
-execvp(args[0], args);
-return 0;
+  execvp(args[0], args);
+  
+  return 0;
 }
