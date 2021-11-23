@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <string.h>
+#include "shell.h"
+
 
 char** parse_args(char* line) {
 	char** arr_args = calloc(5, sizeof(char *));
@@ -43,4 +45,3 @@ void setup() {
   char** args = parse_args(line);
   execvp(args[0], args);
 }
-
