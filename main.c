@@ -18,16 +18,7 @@ int main() {
     line[newline] = '\0';
     printf("\n");
     char** args = parse_args(line);
-    int status, f;
-    f = fork();
-    if(f){
-      wait(&status);
-      if(WIFEXITED(status)){
-        continue;
-      }
-    } else {
-      execvp(args[0], args);
-    }
+    runCommand(args);
 }
   return 0;
 }

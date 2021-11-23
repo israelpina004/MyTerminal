@@ -46,3 +46,13 @@ void setup() {
   char** args = parse_args(line);
   execvp(args[0], args);
 }
+
+void runCommand(char ** args){
+	int f = fork();
+	if(f){
+		wait(NULL);
+		}
+ 	else {
+		execvp(args[0], args);
+	}
+}
