@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <string.h>
 
 char** parse_args(char* line) {
 	char** arr_args = calloc(5, sizeof(char *));
@@ -17,14 +18,18 @@ char** parse_args(char* line) {
 }
 
 void setup() {
-  char* user = getenv(USER);
-  
+  char* user = getenv("USER");
+
   long size;
   char* buff;
-  
+	char* cwd;
+
   size = pathconf(".", _PC_PATH_MAX);
-  buff = (char *)malloc((size_t)size))
+  buff = (char *)malloc((size_t)size);
   if(buff != NULL) {
-    ptr = getcwd(buf, (size_t)size);
+    cwd = getcwd(buff, (size_t)size);
   }
+	printf("%s:", user);
+	printf("%s$\n", cwd);
 }
+
