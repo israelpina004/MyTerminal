@@ -21,7 +21,7 @@ int main() {
     int status, f;
     f = fork();
     if(f){
-      wait(&status)
+      wait(&status);
       if(WIFEXITED(status)){
         continue;
       }
