@@ -32,7 +32,7 @@ void setup() {
   printf("%s:", user);
   printf("%s$ ", cwd);
 
-  //The program exists after the execution of this code. To be fixed later.
+  //The program exists after the execution of this code. To be fixed later ...
   char line[50];
 
   fgets(line, sizeof(line), stdin);
