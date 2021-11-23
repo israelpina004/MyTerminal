@@ -7,9 +7,10 @@
 #include "shell.h"
 
 int main() {
-  setup();
+
 
   while(1){
+    setup();
     char line[50];
 
     printf("Enter commands: \n");
