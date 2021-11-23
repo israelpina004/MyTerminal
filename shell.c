@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "shell.h"
+#include <sys/wait.h>
 
 
 char** parse_args(char* line) {
