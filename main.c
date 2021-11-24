@@ -16,15 +16,7 @@ int main() {
     line[newline] = '\0';
     printf("\n");
     char** args = parse_args(line);
-    int f = fork();
-    printf("f\n");
-  	if(f){
-  		wait(NULL);
-  		printf("hi\n");
-  		}
-   	else {
-  		execvp(args[0], args);
-    }
+    runCommand(args);
   }
   return 0;
 }

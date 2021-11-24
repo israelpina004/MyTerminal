@@ -36,12 +36,19 @@ void setup() {
   printf("%s$ ", cwd);
 }
 
+
 void runCommand(char ** args){
 	int f = fork();
 	if(f){
 		wait(NULL);
 		}
 	else {
-		execvp(args[0], args);
+		if(strncmp(args[0], "exit", 5)){
+			kill(getppid(), 3);
+		} else if(strncmp(args[0], "cd", 3)) {
+			chdir(args[1]);
+		} else {
+			execvp(args[0], args);
+		}
 	}
 }
