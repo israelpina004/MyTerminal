@@ -34,17 +34,6 @@ void setup() {
   }
   printf("%s:", user);
   printf("%s$ ", cwd);
-
-  //The program exists after the execution of this code. To be fixed later ...
-  char line[50];
-
-  fgets(line, sizeof(line), stdin);
-  int newline = strcspn(line, "\n");
-  line[newline] = '\0';
-
-  printf("\n");
-  char** args = parse_args(line);
-  execvp(args[0], args);
 }
 
 void runCommand(char ** args){
@@ -52,7 +41,7 @@ void runCommand(char ** args){
 	if(f){
 		wait(NULL);
 		}
- 	else {
+	else {
 		execvp(args[0], args);
 	}
 }

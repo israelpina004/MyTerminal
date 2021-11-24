@@ -10,15 +10,21 @@
 int main() {
   while(1){
     setup();
-    char line[50];
-
-    printf("Enter commands: \n");
+    char line[100];
     fgets(line, sizeof(line), stdin);
     int newline = strcspn(line, "\n");
     line[newline] = '\0';
     printf("\n");
     char** args = parse_args(line);
-    runCommand(args);
-}
+    int f = fork();
+    printf("f\n");
+  	if(f){
+  		wait(NULL);
+  		printf("hi\n");
+  		}
+   	else {
+  		execvp(args[0], args);
+    }
+  }
   return 0;
 }
