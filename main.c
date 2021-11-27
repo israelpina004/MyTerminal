@@ -10,12 +10,15 @@
 int main() {
   while(1){
     setup();
+
     char line[100];
     fgets(line, sizeof(line), stdin);
+
     int newline = strcspn(line, "\n");
     line[newline] = '\0';
-    printf("\n");
+
     char** args = parse_args(line);
+    otherCommands(args);
     runCommand(args);
   }
   return 0;
