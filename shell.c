@@ -9,12 +9,36 @@
 
 
 char** parse_args(char* line) {
-	char** arr_args = calloc(10, sizeof(char *));
+	char** arr_args = calloc(20, sizeof(char *));
 	char* token;
 
 	int i;
 	for(i = 0; i < sizeof(line); i++) {
 		token = strsep(&line, " ");
+		arr_args[i] = token;
+	}
+
+	return arr_args;
+}
+
+int count_semis(char* line) {
+	int count = 0;
+	for(int i = 0; i < sizeof(line); i++) {
+		if(line[i] == ';') {
+			count++;
+		}
+	}
+	return count;
+}
+
+//Same idea as parse_args but with semicolons.
+char** parse_semis(char* line) {
+	char** arr_args = calloc(20, sizeof(char *));
+	char* token;
+
+	int i;
+	for(i = 0; i < sizeof(line); i++) {
+		token = strsep(&line, ";");
 		arr_args[i] = token;
 	}
 
@@ -44,7 +68,7 @@ void otherCommands(char ** args) {
 	if(strcmp(args[0], "exit") == 0) {
 		exit(0);
 	}
-	
+
 	if(strcmp(args[0], "cd") == 0) {
 		chdir(args[1]);
 	}
