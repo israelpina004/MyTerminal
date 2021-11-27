@@ -9,7 +9,7 @@
 
 
 char** parse_args(char* line) {
-	char** arr_args = calloc(5, sizeof(char *));
+	char** arr_args = calloc(10, sizeof(char *));
 	char* token;
 
 	int i;
@@ -17,6 +17,7 @@ char** parse_args(char* line) {
 		token = strsep(&line, " ");
 		arr_args[i] = token;
 	}
+
 	return arr_args;
 }
 
@@ -32,23 +33,30 @@ void setup() {
   if(buff != NULL) {
     cwd = getcwd(buff, (size_t)size);
   }
+
   printf("%s:", user);
   printf("%s$ ", cwd);
 }
 
+void otherCommands(char ** args) {
+	//Exit doesn't work as intended. Sometimes takes multiple calls to exit for it
+	//to work.
+	if(strcmp(args[0], "exit") == 0) {
+		exit(0);
+	}
+	
+	if(strcmp(args[0], "cd") == 0) {
+		chdir(args[1]);
+	}
+}
 
-void runCommand(char ** args){
+void runCommand(char ** args) {
 	int f = fork();
-	if(f){
+
+	if(f) {
 		wait(NULL);
-		}
+	}
 	else {
-		if(strncmp(args[0], "exit", 5)){
-			kill(getppid(), 3);
-		} else if(strncmp(args[0], "cd", 3)) {
-			chdir(args[1]);
-		} else {
-			execvp(args[0], args);
-		}
+		execvp(args[0], args);
 	}
 }
