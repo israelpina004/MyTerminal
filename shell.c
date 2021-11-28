@@ -21,16 +21,6 @@ char** parse_args(char* line) {
 	return arr_args;
 }
 
-int count_semis(char* line) {
-	int count = 0;
-	for(int i = 0; i < sizeof(line); i++) {
-		if(line[i] == ';') {
-			count++;
-		}
-	}
-	return count;
-}
-
 //Same idea as parse_args but with semicolons.
 char** parse_semis(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
