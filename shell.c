@@ -5,35 +5,9 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "shell.h"
+#include "redirections.h"
 #include <sys/wait.h>
 
-
-char** parse_args(char* line) {
-	char** arr_args = calloc(50, sizeof(char *));
-	char* token;
-
-	int i;
-	for(i = 0; i < sizeof(line); i++) {
-		token = strsep(&line, " ");
-		arr_args[i] = token;
-	}
-
-	return arr_args;
-}
-
-//Same idea as parse_args but with semicolons.
-char** parse_semis(char* line) {
-	char** arr_args = calloc(50, sizeof(char *));
-	char* token;
-
-	int i;
-	for(i = 0; i < sizeof(line); i++) {
-		token = strsep(&line, ";");
-		arr_args[i] = token;
-	}
-
-	return arr_args;
-}
 
 void setup() {
   char* user = getenv("USER");
@@ -52,7 +26,45 @@ void setup() {
   printf("%s$ ", cwd);
 }
 
+char** parse_semis(char* line) {
+	char** arr_args = calloc(50, sizeof(char *));
+	char* token;
 
+	int i;
+	for(i = 0; i < sizeof(line); i++) {
+		token = strsep(&line, ";");
+		arr_args[i] = token;
+	}
+
+	return arr_args;
+}
+
+char** parse_args(char* line) {
+	char** arr_args = calloc(50, sizeof(char *));
+	char* token;
+
+	int i;
+	for(i = 0; i < sizeof(line); i++) {
+		token = strsep(&line, " ");
+		arr_args[i] = token;
+	}
+
+	return arr_args;
+}
+
+char specialCharacter(char * line){
+	if(strchr(line, '<')) {
+		return '<';
+	} else if(strchr(line, '>')) {
+		return '>';
+	} else if(strchr(line, '|')) {
+		return '|';
+	} else if(strstr(line, ">>")) {
+		return 1;
+	}	else {
+		return 0;
+	}
+}
 
 void runCommand(char ** args) {
 	if(strcmp(args[0], "exit") == 0) {
