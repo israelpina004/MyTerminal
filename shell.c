@@ -9,7 +9,7 @@
 
 
 char** parse_args(char* line) {
-	char** arr_args = calloc(20, sizeof(char *));
+	char** arr_args = calloc(50, sizeof(char *));
 	char* token;
 
 	int i;
@@ -33,7 +33,7 @@ int count_semis(char* line) {
 
 //Same idea as parse_args but with semicolons.
 char** parse_semis(char* line) {
-	char** arr_args = calloc(20, sizeof(char *));
+	char** arr_args = calloc(50, sizeof(char *));
 	char* token;
 
 	int i;
