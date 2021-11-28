@@ -8,30 +8,28 @@
 #include <sys/wait.h>
 
 int main() {
+  printf("\nWelcome to Aaron and Israel's shell.\n\n");
+
   while(1){
     setup();
 
-    char line[100];
+    char line[200];
     fgets(line, sizeof(line), stdin);
 
     int newline = strcspn(line, "\n");
     line[newline] = '\0';
 
-    //Supposed to parse the line from stdin by semicolons if there are any and
-    //then parse those arrays by spaces. Each sub-array is then supposed to be
-    //execvp'd. Not working as expected, but the program does not pass an error
-    //when a semicolon is present in the line, it just ignores the substrings
-    //that follow it.
     char** args = parse_semis(line);
-    for(int i = 0; i < count_semis(line); i++) {
+    int i = 0;
+    while(args[i] != NULL) {
       char** commands = parse_args(args[i]);
-      otherCommands(args);
-      runCommand(args);
+      otherCommands(commands);
+      runCommand(commands);
+      i++;
     }
 
-    args = parse_args(line);
-    otherCommands(args);
-    runCommand(args);
+    printf("-----------------------------------------------------------------------------------------------\n");
   }
+
   return 0;
 }
