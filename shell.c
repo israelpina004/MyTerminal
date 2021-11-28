@@ -52,25 +52,23 @@ void setup() {
   printf("%s$ ", cwd);
 }
 
-void otherCommands(char ** args) {
-	//Exit doesn't work as intended. Sometimes takes multiple calls to exit for it
-	//to work.
+
+
+void runCommand(char ** args) {
 	if(strcmp(args[0], "exit") == 0) {
 		exit(0);
 	}
-
-	if(strcmp(args[0], "cd") == 0) {
+	else if(strcmp(args[0], "cd") == 0) {
 		chdir(args[1]);
 	}
-}
-
-void runCommand(char ** args) {
-	int f = fork();
-
-	if(f) {
-		wait(NULL);
-	}
 	else {
-		execvp(args[0], args);
+		int f = fork();
+
+		if(f) {
+			wait(NULL);
+		}
+		else {
+			execvp(args[0], args);
+		}
 	}
 }

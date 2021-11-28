@@ -23,12 +23,11 @@ int main() {
     int i = 0;
     while(args[i] != NULL) {
       char** commands = parse_args(args[i]);
-      otherCommands(commands);
       runCommand(commands);
       i++;
     }
 
-    printf("-----------------------------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------------------\n");
   }
 
   return 0;
