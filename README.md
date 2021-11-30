@@ -17,6 +17,7 @@ Attempts at implementing other features were not made.
 
 
 
+
 Bugs:
 
 -There cannot be a space before or after a semicolon. If there is, the program is forcibly exited.
@@ -26,6 +27,7 @@ Bugs:
 -A broken pipe will forcibly exit the program.
 
 -If the user inputs a command or commands that do not exist, it will take multiple exit calls for the program to exit.
+
 
 
 
