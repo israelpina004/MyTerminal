@@ -19,14 +19,16 @@ void inputRedirection(char *line){
 }
 
 void outputRedirection(char *line){
-  char * path = strsep(&line, ">");
-  line ++;
-  int new_output = open(line, O_WRONLY|O_CREAT, 0644);
-  int copyof_output = dup(STDOUT_FILENO);
+  char * path = line;
+  strsep(&path, ">");
+  //move past space
+  path ++;
+  int new_output = open(path, O_WRONLY|O_CREAT, 0644);
+  int copy_of_output = dup(STDOUT_FILENO);
   dup2(new_output,STDOUT_FILENO);
-  char ** args = parse_args(path);
+  char ** args = parse_args(line);
   runCommand(args);
-  dup2(copyof_output,STDOUT_FILENO);
+  dup2(copy_of_output,STDOUT_FILENO);
 }
 
 void appendRedirection(char * line){

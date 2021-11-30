@@ -10,27 +10,28 @@
 
 void operate(){
   char * line = readline();
-  char** args = parse_semis(line);
+  char** commands = parse_semis(line);
   int i = 0;
-  while(args[i] != NULL) {
-    char special = specialCharacter(args[i]);
+  while(commands[i]) {
+    char special = specialCharacter(commands[i]);
     if(special == '<') {
-      inputRedirection(args[i]);
+      inputRedirection(commands[i]);
     } else if(special == '>') {
-      outputRedirection(args[i]);
+      outputRedirection(commands[i]);
     } else if (special == 1) {
-      appendRedirection(args[i]);
+      appendRedirection(commands[i]);
     } else if(special == '|') {
-      piping(args[i]);
+      piping(commands[i]);
     }
     else {
-      char** commands = parse_args(args[i]);
-      runCommand(commands);
+      char** args = parse_args(commands[i]);
+      runCommand(args);
     }
     i++;
   }
 }
-void setup() {
+
+void print_prompt() {
   char* user = getenv("USER");
 
   long size;
@@ -48,8 +49,8 @@ void setup() {
 }
 
 char * readline(){
-  char * line = calloc(200, sizeof(char *));
-  fgets(line, sizeof(line), stdin);
+  char * line = calloc(200, sizeof(char));
+  fgets(line, 200, stdin);
   int newline = strcspn(line, "\n");
   line[newline] = '\0';
   return line;
@@ -57,25 +58,26 @@ char * readline(){
 
 char** parse_semis(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
-	char* token;
-
-	int i;
-	for(i = 0; i < sizeof(line); i++) {
+	char* token = line;
+  int i;
+	for(i = 0; i < sizeof(arr_args) && token != NULL; i++) {
 		token = strsep(&line, ";");
 		arr_args[i] = token;
 	}
-
 	return arr_args;
 }
 
 char** parse_args(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
-	char* token;
+	char* token = line;
 
 	int i;
-	for(i = 0; i < sizeof(line); i++) {
+	for(i = 0; i < sizeof(arr_args) && token != NULL;) {
 		token = strsep(&line, " ");
-		arr_args[i] = token;
+    if(token && strlen(token)){
+      arr_args[i] = token;
+      i++;
+    }
 	}
 
 	return arr_args;
@@ -83,7 +85,7 @@ char** parse_args(char* line) {
 
 
 char specialCharacter(char * line){
-	if(strchr(line, '<')) {
+ if(strchr(line, '<')) {
 		return '<';
 	}
   else if(strchr(line, '>')) {
@@ -93,7 +95,6 @@ char specialCharacter(char * line){
 		return '|';
 	}
   else if(strstr(line, ">>")) {
-
 		return 1;
 	}
   else {
@@ -116,6 +117,7 @@ void runCommand(char ** args) {
 		}
 		else {
 			execvp(args[0], args);
+      exit(0);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 char** parse_args(char* line);
 void operate();
-void setup();
+void print_prompt();
 char * readline();
 char** parse_semis(char* line);
 char specialCharacter(char * line);

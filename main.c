@@ -12,7 +12,7 @@ int main() {
   printf("\nWelcome to Aaron and Israel's shell.\n\n");
 
   while(1){
-    setup();
+    print_prompt();
     operate();
     printf("-------------------------------------------------------------------------------------\n");
   }
