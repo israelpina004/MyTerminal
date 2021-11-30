@@ -30,8 +30,10 @@ void operate(){
     else {
       char** args = parse_args(commands[i]);
       runCommand(args);
+      free(args);
     }
     i++;
+    free(commands);
   }
 }
 
