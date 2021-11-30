@@ -31,6 +31,8 @@ void operate(){
   }
 }
 
+//Prints the user's path and username, mimicking the format of a real shell.
+//Also reads from stdin the user's commands.
 void print_prompt() {
   char* user = getenv("USER");
 
@@ -48,7 +50,7 @@ void print_prompt() {
   printf("%s$ ", cwd);
 }
 
-char * readline(){
+  char * readline(){
   char * line = calloc(200, sizeof(char));
   fgets(line, 200, stdin);
   int newline = strcspn(line, "\n");
@@ -56,6 +58,10 @@ char * readline(){
   return line;
 }
 
+//Takes in the user's commands from stdin as an argument and returns an array of
+//strings. Each substring is spliced through the semicolons in between them and
+//are stored in arr_args. These substrings are then passed through parse_args.
+//This mimics the functionality of semicolons in actual shells.
 char** parse_semis(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
 	char* token = line;
@@ -67,6 +73,9 @@ char** parse_semis(char* line) {
 	return arr_args;
 }
 
+//Takes in a string from the array of strings returned from parse_semis as an
+//argument and returns an array of strings for execvp to use. Each substring is
+//spliced through the spaces in between them and are stored in arr_args.
 char** parse_args(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
 	char* token = line;
@@ -74,7 +83,7 @@ char** parse_args(char* line) {
 	int i;
 	for(i = 0; i < sizeof(arr_args) && token != NULL;) {
 		token = strsep(&line, " ");
-    if(token && strlen(token)){
+    if(token && strlen(token)) {
       arr_args[i] = token;
       i++;
     }
@@ -82,7 +91,6 @@ char** parse_args(char* line) {
 
 	return arr_args;
 }
-
 
 char specialCharacter(char * line){
  if(strchr(line, '<')) {
@@ -102,6 +110,9 @@ char specialCharacter(char * line){
 	}
 }
 
+//Runs the user's command(s), forking first and then taking in the array of
+//strings from parse_args and passing them through execvp. Checks first if the
+//command is not a built-in command (cd, exit).
 void runCommand(char ** args) {
 	if(strcmp(args[0], "exit") == 0) {
 		exit(0);
