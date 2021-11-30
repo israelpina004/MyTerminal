@@ -2,17 +2,26 @@ Project 01: Getting out of your Shell
 
 Features:
 -Different commands can be seperated with semicolons.
+
 -cd and exit work as appropriate.
 -Different commands can be separated through semicolons.
+
 -Piping works as appropriate between two commands.
+
 -Simple redirection works as appropriate.
+
 Attempts at implementing other features were not made.
+
 
 Bugs:
 -There cannot be a space before or after a semicolon. If there is, the program is forcibly exited.
+
 -Piping only works between two commands.
+
 -A broken pipe will forcibly exit the program.
+
 -If the user inputs a command or commands that do not exist, it will take multiple exit calls for the program to exit.
+
 
 Function headers:
 void operate(): How the shell runs; operates all the functions necessary to run the shell. It first checks for semicolons, then for "special characters" (pipes, redirection), performs the appropriate task if these special characters are present, then runs any built-in commands.
