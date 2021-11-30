@@ -25,7 +25,9 @@ Bugs:
 -If the user inputs a command or commands that do not exist, it will take multiple exit calls for the program to exit.
 
 
+
 Function headers:
+
 void operate(): How the shell runs; operates all the functions necessary to run the shell. It first checks for semicolons, then for "special characters" (pipes, redirection), performs the appropriate task if these special characters are present, then runs any built-in commands.
 
 void print_prompt(): Prints the user's path and username, mimicking the format of a real shell. Also reads from stdin the user's commands.
