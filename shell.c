@@ -52,33 +52,6 @@ char** parse_args(char* line) {
 	return arr_args;
 }
 
-int piping(char* line) {
-  char** pipe_args = calloc(10, sizeof(char *));
-  char* token;
-
-  int i;
-  for(i = 0; i < sizeof(line); i++) {
-    token = strsep(&line, "|");
-    pipe_args[i] = token;
-  }
-
-  FILE *fd1 = popen(pipe_args[0], "r");
-  FILE *fd2 = popen(pipe_args[1], "w");
-  if(fd1 == NULL || fd2 == NULL) {
-    printf("Error piping.\n");
-    return 1;
-  }
- 
-  char input[500];
-  while(fgets(input, sizeof(input), fd1)) {
-    fputs(input, fd2);
-  }
-  
-  pclose(fd1);
-  pclose(fd2);
-
-  return 0;
-}
 
 char specialCharacter(char * line){
 	if(strchr(line, '<')) {
