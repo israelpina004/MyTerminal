@@ -13,27 +13,7 @@ int main() {
 
   while(1){
     setup();
-    char * line = readline();
-    char** args = parse_semis(line);
-    int i = 0;
-    while(args[i] != NULL) {
-      char special = specialCharacter(args[i]);
-      if(special == '<') {
-        inputRedirection(args[i]);
-      } else if(special == '>') {
-        outputRedirection(args[i]);
-      } else if (special == 1) {
-        appendRedirection(args[i]);
-      } else if(special == '|') {
-        piping(args[i]);
-      }
-      else {
-        char** commands = parse_args(args[i]);
-        runCommand(commands);
-      }
-      i++;
-    }
-
+    operate();
     printf("-------------------------------------------------------------------------------------\n");
   }
 
