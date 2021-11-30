@@ -16,14 +16,16 @@ void inputRedirection(char *line){
   dup2(new_input,STDIN_FILENO);
   operate();
   dup2(copy_of_input,STDIN_FILENO);
+  close(copy_of_input);
+  close(new_input);
 }
 
 void outputRedirection(char *line){
   char * path = line;
   strsep(&path, ">");
   int i = 0;
-  while(line[i]==' '){
-    line++;
+  while(path[i]==' '){
+    path++;
     i++;
   }
   int new_output = open(path, O_WRONLY|O_CREAT, 0644);
@@ -32,18 +34,25 @@ void outputRedirection(char *line){
   char ** args = parse_args(line);
   runCommand(args);
   dup2(copy_of_output,STDOUT_FILENO);
+  close(new_output);
+  close(copy_of_output);
 }
 
 void appendRedirection(char * line){
   char * path = strsep(&line, ">>");
-  line ++;
-  printf("hi");
-  int new_output = open(line, O_APPEND|O_CREAT, 0644);
-  int old_output = dup(STDOUT_FILENO);
+  int i = 0;
+  while(line[i]==' '){
+    line++;
+    i++;
+  }
+  int new_output = open(line, O_APPEND);
+  int copy_of_output = dup(STDOUT_FILENO);
   dup2(new_output,STDOUT_FILENO);
   char ** args = parse_args(path);
   runCommand(args);
-  dup2(old_output,STDOUT_FILENO);
+  dup2(copy_of_output,STDOUT_FILENO);
+  close(new_output);
+  close(copy_of_output);
 }
 void piping(char *line){
   char** pipe_args = calloc(10, sizeof(char *));
