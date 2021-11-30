@@ -20,8 +20,6 @@ Attempts at implementing other features were not made.
 
 Bugs:
 
--There cannot be a space before or after a semicolon. If there is, the program is forcibly exited.
-
 -Piping only works between two commands.
 
 -A broken pipe will forcibly exit the program.
@@ -44,10 +42,10 @@ char specialCharacter(char * line): Helps the shell check for redirection or pip
 
 void runCommand(char ** args): Runs the user's command(s), forking first and then taking in the array of strings from parse_args and passing them through execvp. Checks first if the command is not a built-in command (cd, exit).
 
-void inputRedirection(char *line):
+void inputRedirection(char *line): Runs if < is found, changes stdin to a inputed file, runs operate command with arguments from file, then closes file and resets the file descriptors
 
-void outputRedirection(char *line):
+void outputRedirection(char *line): Runs if > is found, changes stdout to a inputed file, runs operate command with arguments from file, then closes file and resets the file descriptors
 
-void appendRedirection(char * line):
+void appendRedirection(char * line): Runs if >> is found, changes stdout to a inputed file, runs operate command with arguments from file, appending them into the file, then closes file and resets the file descriptors
 
-void piping(char *line):
+void piping(char *line): Runs if | is found, forms pipe between two commands using popen

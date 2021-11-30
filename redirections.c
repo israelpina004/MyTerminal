@@ -8,18 +8,27 @@
 #include "shell.h"
 #include "redirections.h"
 #include <sys/wait.h>
-
+// Changes stdin to file, using dup to move file descriptors
 void inputRedirection(char *line){
-  char * file = strsep(&line, "<");
-  int new_input = open(file, O_RDONLY, 0644);
+  char * path = line;
+  strsep(&path, "<");
+  int i = 0;
+  while(path[i]==' '){
+    path++;
+    i++;
+  }
+  printf("%s, %s\n", path, line);
+  int new_input = open(path, O_RDONLY);
   int copy_of_input = dup(STDIN_FILENO);
   dup2(new_input,STDIN_FILENO);
-  operate();
+  char ** args = parse_args(line);
+  runCommand(args);
+  close(STDIN_FILENO);
   dup2(copy_of_input,STDIN_FILENO);
-  close(copy_of_input);
   close(new_input);
+  close(copy_of_input);
 }
-
+// changes output to a file from stdout using dup
 void outputRedirection(char *line){
   char * path = line;
   strsep(&path, ">");
@@ -28,7 +37,7 @@ void outputRedirection(char *line){
     path++;
     i++;
   }
-  int new_output = open(path, O_WRONLY|O_CREAT, 0644);
+  int new_output = open(path, O_TRUNC|O_WRONLY|O_CREAT, 0644);
   int copy_of_output = dup(STDOUT_FILENO);
   dup2(new_output,STDOUT_FILENO);
   char ** args = parse_args(line);
@@ -37,7 +46,7 @@ void outputRedirection(char *line){
   close(new_output);
   close(copy_of_output);
 }
-
+// Appends output to a file rather than stdout
 void appendRedirection(char * line){
   char * path = strsep(&line, ">>");
   int i = 0;
@@ -45,7 +54,7 @@ void appendRedirection(char * line){
     line++;
     i++;
   }
-  int new_output = open(line, O_APPEND);
+  int new_output = open(line, O_APPEND | O_WRONLY | O_CREAT, 0644);
   int copy_of_output = dup(STDOUT_FILENO);
   dup2(new_output,STDOUT_FILENO);
   char ** args = parse_args(path);
@@ -54,7 +63,7 @@ void appendRedirection(char * line){
   close(new_output);
   close(copy_of_output);
 }
-
+// Forms pipe between two files
 void piping(char *line){
   char** pipe_args = calloc(10, sizeof(char *));
   char* token;
