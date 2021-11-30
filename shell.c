@@ -96,14 +96,14 @@ char specialCharacter(char * line){
  if(strchr(line, '<')) {
 		return '<';
 	}
+  else if(strstr(line, ">>")) {
+		return 1;
+	}
   else if(strchr(line, '>')) {
 		return '>';
 	}
   else if(strchr(line, '|')) {
 		return '|';
-	}
-  else if(strstr(line, ">>")) {
-		return 1;
 	}
   else {
 		return 0;
@@ -128,7 +128,6 @@ void runCommand(char ** args) {
 		}
 		else {
 			execvp(args[0], args);
-      exit(0);
 		}
 	}
 }
