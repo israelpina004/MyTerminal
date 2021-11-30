@@ -1,9 +1,12 @@
 Project 01: Getting out of your Shell
 
+
 Features:
+
 -Different commands can be seperated with semicolons.
 
 -cd and exit work as appropriate.
+
 -Different commands can be separated through semicolons.
 
 -Piping works as appropriate between two commands.
