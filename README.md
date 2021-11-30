@@ -18,6 +18,7 @@ Attempts at implementing other features were not made.
 
 
 
+
 Bugs:
 
 -There cannot be a space before or after a semicolon. If there is, the program is forcibly exited.
