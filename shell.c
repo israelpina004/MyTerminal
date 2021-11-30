@@ -26,6 +26,14 @@ void setup() {
   printf("%s$ ", cwd);
 }
 
+char * readline(){
+  char * line = calloc(200, sizeof(char *));
+  fgets(line, sizeof(line), stdin);
+  int newline = strcspn(line, "\n");
+  line[newline] = '\0';
+  return line;
+}
+
 char** parse_semis(char* line) {
 	char** arr_args = calloc(50, sizeof(char *));
 	char* token;
@@ -64,6 +72,7 @@ char specialCharacter(char * line){
 		return '|';
 	}
   else if(strstr(line, ">>")) {
+
 		return 1;
 	}
   else {

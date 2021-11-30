@@ -13,11 +13,7 @@ int main() {
 
   while(1){
     setup();
-    char line[200];
-    fgets(line, sizeof(line), stdin);
-    int newline = strcspn(line, "\n");
-    line[newline] = '\0';
-
+    char * line = readline();
     char** args = parse_semis(line);
     int i = 0;
     while(args[i] != NULL) {
