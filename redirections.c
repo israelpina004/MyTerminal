@@ -54,6 +54,7 @@ void appendRedirection(char * line){
   close(new_output);
   close(copy_of_output);
 }
+
 void piping(char *line){
   char** pipe_args = calloc(10, sizeof(char *));
   char* token;

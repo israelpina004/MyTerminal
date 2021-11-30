@@ -8,6 +8,10 @@
 #include "redirections.h"
 #include <sys/wait.h>
 
+//How the shell runs; operates all the functions necessary to run the shell. It
+//first checks for semicolons, then for "special characters" (pipes, redirection),
+//performs the appropriate task if these special characters are present, then
+//runs any built-in commands.
 void operate(){
   char * line = readline();
   char** commands = parse_semis(line);
@@ -92,6 +96,9 @@ char** parse_args(char* line) {
 	return arr_args;
 }
 
+//Helps the shell check for redirection or pipes. If it does, it goes on to
+//perform the appropriate functions depending on which special character is
+//detected.
 char specialCharacter(char * line){
  if(strchr(line, '<')) {
 		return '<';
