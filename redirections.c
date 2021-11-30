@@ -21,8 +21,11 @@ void inputRedirection(char *line){
 void outputRedirection(char *line){
   char * path = line;
   strsep(&path, ">");
-  //move past space
-  path ++;
+  int i = 0;
+  while(line[i]==' '){
+    line++;
+    i++;
+  }
   int new_output = open(path, O_WRONLY|O_CREAT, 0644);
   int copy_of_output = dup(STDOUT_FILENO);
   dup2(new_output,STDOUT_FILENO);
