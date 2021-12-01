@@ -9,4 +9,4 @@ redirections.o: redirections.c redirections.h shell.h
 run:
 	./program
 clean:
-	rm -rf program main.o nodes.o library.o
+	rm -rf *.o program
