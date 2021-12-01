@@ -4,7 +4,7 @@ Project 01: Getting out of your Shell
 
 Features:
 
--Different commands can be seperated with semicolons.
+-Different commands can be separated with semicolons.
 
 -cd and exit work as appropriate.
 
