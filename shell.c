@@ -33,8 +33,8 @@ void operate(){
       free(args);
     }
     i++;
-    free(commands);
   }
+  free(commands);
 }
 
 //Prints the user's path and username, mimicking the format of a real shell.
