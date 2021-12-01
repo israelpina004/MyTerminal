@@ -8,6 +8,7 @@
 #include "shell.h"
 #include "redirections.h"
 #include <sys/wait.h>
+
 // Changes stdin to file, using dup to move file descriptors
 void inputRedirection(char *line){
   char * path = line;
@@ -28,6 +29,7 @@ void inputRedirection(char *line){
   close(new_input);
   close(copy_of_input);
 }
+
 // changes output to a file from stdout using dup
 void outputRedirection(char *line){
   char * path = line;
@@ -46,6 +48,7 @@ void outputRedirection(char *line){
   close(new_output);
   close(copy_of_output);
 }
+
 // Appends output to a file rather than stdout
 void appendRedirection(char * line){
   char * path = strsep(&line, ">>");
