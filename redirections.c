@@ -18,7 +18,6 @@ void inputRedirection(char *line){
     path++;
     i++;
   }
-  printf("%s, %s\n", path, line);
   int new_input = open(path, O_RDONLY);
   int copy_of_input = dup(STDIN_FILENO);
   dup2(new_input,STDIN_FILENO);
@@ -52,6 +51,7 @@ void outputRedirection(char *line){
 // Appends output to a file rather than stdout
 void appendRedirection(char * line){
   char * path = strsep(&line, ">>");
+  line ++;
   int i = 0;
   while(line[i]==' '){
     line++;
@@ -59,6 +59,7 @@ void appendRedirection(char * line){
   }
   int new_output = open(line, O_APPEND | O_WRONLY | O_CREAT, 0644);
   int copy_of_output = dup(STDOUT_FILENO);
+
   dup2(new_output,STDOUT_FILENO);
   char ** args = parse_args(path);
   runCommand(args);

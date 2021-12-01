@@ -136,6 +136,7 @@ void runCommand(char ** args) {
 			wait(NULL);
 		}
 		else {
+      printf("ran");
 			execvp(args[0], args);
 		}
 	}
